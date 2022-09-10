@@ -37,25 +37,44 @@
         </nav>
 
          <div class="row">
-            <table class="table">
-              <thead>
-              <tr>
-                <th scope="col">Название</th>
-                <th scope="col">Описание</th>
-                <th scope="col">Дата создания</th>
-                <th scope="col">Обсуждение</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr th:each="post: ${posts}">
-                <td><a th:text="${post.name}" th:href="@{|posts/${post.id}|}"></a></td>
-                <td th:text="${post.description}"></td>
-                <td th:text="${#temporals.format(post.created, 'dd-MM-yyyy,HH:mm')}"></td>
-                <td><a th:href="@{|discussion/${post.id}|}">Link</a></td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
+           <table class="table">
+               <thead>
+               <tr>
+                   <th scope="col">Название</th>
+                   <th scope="col">Описание</th>
+                   <th scope="col">Дата создания</th>
+               </tr>
+               </thead>
+               <tbody>
+                   <td th:text="${p.name}"></td>
+                   <td th:text="${p.description}"></td>
+                     <td th:text="${#temporals.format(p.created, 'dd-MM-yyyy,HH:mm')}"></td>
+               </td>
+               </tbody>
+           </table>
+
+           <table class="table">
+                 <thead>
+                 <tr>
+                     <th scope="col">Ответ</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    Здесь будут комментарии
+                </tr>
+                </tbody>
+           </table>
+       </div>
+
+       <form th:action="@{/comment}" method="POST">
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <input type="text" class="form-control" name="description" id="description" placeholder="Введите комментарий...">
+                    </div>
+                  </div>
+            <button type="submit" class="btn btn-primary">Sign in</button>
+        </form>
 
     </div>
 </body>

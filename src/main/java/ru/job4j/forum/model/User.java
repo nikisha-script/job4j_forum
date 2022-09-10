@@ -2,23 +2,18 @@ package ru.job4j.forum.model;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Post {
+public class User {
 
     private int id;
 
     @NonNull
-    private String name;
+    private String username;
     @NonNull
-    private String description;
-    @NonNull
-    private LocalDateTime created;
-
+    private String password;
 
 }
