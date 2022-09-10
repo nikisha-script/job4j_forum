@@ -40,7 +40,7 @@ public class IndexControl {
 
     @GetMapping("/posts/{id}")
     public String getPost(@PathVariable("id") int id, Model model) {
-        model.addAttribute("post", service.findById(id));
+        model.addAttribute("post", service.findById(id).get());
         model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getName());
         return "update";
     }
@@ -49,14 +49,18 @@ public class IndexControl {
     public String getPost(@ModelAttribute Post post,
                           @RequestParam("id") int id) {
         post.setCreated(LocalDateTime.now());
-        service.update(id, post);
+        Post rsl = service.findById(id).get();
+        rsl.setName(post.getName());
+        rsl.setDescription(post.getDescription());
+        rsl.setCreated(post.getCreated());
+        service.save(rsl);
         return "redirect:/index";
     }
 
     @GetMapping("/discussion/{id}")
     public String getDiscussion(@PathVariable("id") int id, Model model) {
         model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getName());
-        model.addAttribute("p", service.findById(id));
+        model.addAttribute("p", service.findById(id).get());
         return "post";
     }
 

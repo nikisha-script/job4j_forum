@@ -3,7 +3,6 @@ package ru.job4j.forum.store;
 import org.springframework.stereotype.Repository;
 import ru.job4j.forum.model.Post;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -16,7 +15,7 @@ public class PostStore {
 
     public PostStore() {
         this.id = new AtomicInteger(0);
-        Post post = new Post("Продаю машину ладу 01.", "2015 год", LocalDateTime.now());
+        Post post = new Post("Продаю машину ладу 01.", "2015 год");
         post.setId(id.getAndIncrement());
         posts.add(post);
     }

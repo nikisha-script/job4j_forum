@@ -2,24 +2,25 @@ package ru.job4j.forum.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.forum.model.Post;
-import ru.job4j.forum.store.PostStore;
+import ru.job4j.forum.store.PostRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostService {
 
-    private final PostStore store;
+    private final PostRepository store;
 
-    public PostService(PostStore store) {
+    public PostService(PostRepository store) {
         this.store = store;
     }
 
     public List<Post> getAll() {
-        return store.getAll();
+        return store.findAll();
     }
 
-    public Post findById(int id) {
+    public Optional<Post> findById(int id) {
         return store.findById(id);
     }
 
@@ -27,7 +28,4 @@ public class PostService {
         store.save(post);
     }
 
-    public void update(int id, Post post) {
-        store.update(id, post);
-    }
 }
