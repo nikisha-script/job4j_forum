@@ -1,5 +1,6 @@
 package ru.job4j.forum.controller;
 
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.job4j.forum.model.Post;
 import ru.job4j.forum.service.PostService;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 
 @Controller
@@ -18,16 +20,17 @@ public class IndexControl {
         this.service = posts;
     }
 
+
     @GetMapping({"/", "/index"})
-    public String index(Model model) {
-        model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getName());
+    public String index(Model model, @CurrentSecurityContext(expression = "authentication")Principal principal) {
+        model.addAttribute("user", principal.getName());
         model.addAttribute("posts", service.getAll());
         return "index";
     }
 
     @GetMapping("/create")
-    public String getCreate(Model model) {
-        model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getName());
+    public String getCreate(Model model, @CurrentSecurityContext(expression = "authentication")Principal principal) {
+        model.addAttribute("user", principal.getName());
         return "create";
     }
 
