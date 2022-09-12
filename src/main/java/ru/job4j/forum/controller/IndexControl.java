@@ -1,7 +1,6 @@
 package ru.job4j.forum.controller;
 
 import org.springframework.security.core.annotation.CurrentSecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,14 +21,16 @@ public class IndexControl {
 
 
     @GetMapping({"/", "/index"})
-    public String index(Model model, @CurrentSecurityContext(expression = "authentication")Principal principal) {
+    public String index(Model model,
+                        @CurrentSecurityContext(expression = "authentication") Principal principal) {
         model.addAttribute("user", principal.getName());
         model.addAttribute("posts", service.getAll());
         return "index";
     }
 
     @GetMapping("/create")
-    public String getCreate(Model model, @CurrentSecurityContext(expression = "authentication")Principal principal) {
+    public String getCreate(Model model,
+                            @CurrentSecurityContext(expression = "authentication") Principal principal) {
         model.addAttribute("user", principal.getName());
         return "create";
     }
@@ -42,9 +43,10 @@ public class IndexControl {
     }
 
     @GetMapping("/posts/{id}")
-    public String getPost(@PathVariable("id") int id, Model model) {
+    public String getPost(@PathVariable("id") int id, Model model,
+                          @CurrentSecurityContext(expression = "authentication") Principal principal) {
         model.addAttribute("post", service.findById(id).get());
-        model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getName());
+        model.addAttribute("user", principal.getName());
         return "update";
     }
 
@@ -61,8 +63,9 @@ public class IndexControl {
     }
 
     @GetMapping("/discussion/{id}")
-    public String getDiscussion(@PathVariable("id") int id, Model model) {
-        model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getName());
+    public String getDiscussion(@PathVariable("id") int id, Model model,
+                                @CurrentSecurityContext(expression = "authentication") Principal principal) {
+        model.addAttribute("user", principal.getName());
         model.addAttribute("p", service.findById(id).get());
         return "post";
     }
