@@ -17,9 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginControl {
 
     @GetMapping("/login")
-    public String getLogin(@RequestParam(value = "error", required = false) String error,
-                           @RequestParam(value = "logout", required = false) String logout,
-                           Model model) {
+    public String loginPage(@RequestParam(value = "error", required = false) String error,
+                            @RequestParam(value = "logout", required = false) String logout,
+                            Model model) {
         String errorMessage = null;
         if (error != null) {
             errorMessage = "Username or Password is incorrect !!";
@@ -38,11 +38,6 @@ public class LoginControl {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "redirect:/login?logout=true";
-    }
-
-    @GetMapping("/reg")
-    public String getReg() {
-        return "reg";
     }
 
 }

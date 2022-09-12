@@ -4,19 +4,24 @@ import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.job4j.forum.model.Message;
 import ru.job4j.forum.model.Post;
+import ru.job4j.forum.service.MsgService;
 import ru.job4j.forum.service.PostService;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Controller
 public class IndexControl {
 
     private final PostService service;
+    private final MsgService msgService;
 
-    public IndexControl(PostService posts) {
+    public IndexControl(PostService posts, MsgService msgService) {
         this.service = posts;
+        this.msgService = msgService;
     }
 
 
@@ -67,8 +72,21 @@ public class IndexControl {
                                 @CurrentSecurityContext(expression = "authentication") Principal principal) {
         model.addAttribute("user", principal.getName());
         model.addAttribute("p", service.findById(id).get());
+        model.addAttribute("msgs", msgService.findById(id));
         return "post";
     }
 
-
+    @PostMapping("/comment/{id}")
+    public String getComment(Model model,
+                             @RequestParam("text") String message,
+                             @PathVariable("id") int id,
+                             @CurrentSecurityContext(expression = "authentication") Principal principal) {
+        Message msg = new Message(message);
+        Optional<Post> post = service.findById(id);
+        msg.setPost(post.get());
+        post.get().getMessages().add(msg);
+        msgService.addMsg(msg);
+        model.addAttribute("user", principal.getName());
+        return "redirect:/discussion/{id}";
+    }
 }

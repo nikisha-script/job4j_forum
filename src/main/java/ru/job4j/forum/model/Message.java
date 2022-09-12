@@ -3,16 +3,15 @@ package ru.job4j.forum.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
+@Entity
+@Table(name = "messages")
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @RequiredArgsConstructor
-@Entity
-@Table(name = "users")
-public class User {
+public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,15 +19,10 @@ public class User {
     private int id;
 
     @NonNull
-    private String username;
-    @NonNull
-    private String password;
+    private String text;
 
-    private Boolean enabled;
-
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
 
 }

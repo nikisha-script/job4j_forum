@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -26,5 +28,10 @@ public class Post {
 
     private LocalDateTime created;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "posts_messages",
+    joinColumns = {@JoinColumn(name = "post_id")},
+    inverseJoinColumns = {@JoinColumn(name = "messages_id")})
+    private List<Message> messages = new ArrayList<>();
 
 }

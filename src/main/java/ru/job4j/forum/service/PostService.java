@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.job4j.forum.model.Post;
 import ru.job4j.forum.store.PostRepository;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -27,5 +28,6 @@ public class PostService {
     public void save(Post post) {
         store.save(post);
     }
+
 
 }
