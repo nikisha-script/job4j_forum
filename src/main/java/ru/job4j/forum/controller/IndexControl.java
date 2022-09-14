@@ -56,14 +56,9 @@ public class IndexControl {
     }
 
     @PostMapping("/update")
-    public String getPost(@ModelAttribute Post post,
-                          @RequestParam("id") int id) {
+    public String getPost(@ModelAttribute Post post) {
         post.setCreated(LocalDateTime.now());
-        Post rsl = service.findById(id).get();
-        rsl.setName(post.getName());
-        rsl.setDescription(post.getDescription());
-        rsl.setCreated(post.getCreated());
-        service.save(rsl);
+        service.save(post);
         return "redirect:/index";
     }
 
