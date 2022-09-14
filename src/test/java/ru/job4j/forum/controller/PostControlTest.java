@@ -9,10 +9,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.job4j.forum.Main;
-import ru.job4j.forum.model.Message;
 import ru.job4j.forum.model.Post;
 import ru.job4j.forum.model.User;
-import ru.job4j.forum.service.MsgService;
 import ru.job4j.forum.service.PostService;
 import ru.job4j.forum.store.UserRepository;
 
@@ -43,7 +41,7 @@ public class PostControlTest {
     @WithMockUser
     public void shouldReturnDefaultMessage() throws Exception {
         this.mockMvc.perform(post("/create")
-                        .param("name","Куплю ладу-грант. Дорого."))
+                        .param("name", "Куплю ладу-грант. Дорого."))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection());
         ArgumentCaptor<Post> argument = ArgumentCaptor.forClass(Post.class);
@@ -55,7 +53,7 @@ public class PostControlTest {
     @WithMockUser
     public void whenPostPost() throws Exception {
         this.mockMvc.perform(post("/update")
-                        .param("name","Куплю ладу-грант. Дорого.")
+                        .param("name", "Куплю ладу-грант. Дорого.")
                         .param("description", "description"))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
