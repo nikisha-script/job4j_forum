@@ -59,6 +59,7 @@ public class PostControlTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/index"));
         ArgumentCaptor<Post> argument = ArgumentCaptor.forClass(Post.class);
+
         verify(posts).save(argument.capture());
         assertThat(argument.getValue().getName(), is("Куплю ладу-грант. Дорого."));
         assertThat(argument.getValue().getDescription(), is("description"));
