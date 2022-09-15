@@ -59,7 +59,6 @@ class IndexControlTest {
         Optional<Post> post = Optional.of(new Post("test", "test"));
         post.get().setId(1);
         post.get().setCreated(LocalDateTime.now());
-
         this.mockMvc.perform(get("/posts/{id}", post.get().getId()))
                 .andDo(print())
                 .andExpect(status().isOk())
