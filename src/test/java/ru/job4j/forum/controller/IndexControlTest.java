@@ -12,18 +12,20 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.job4j.forum.Main;
 import ru.job4j.forum.model.Post;
+import ru.job4j.forum.service.PostService;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-@SpringBootTest(classes = Main.class)
+@SpringBootTest()
 @AutoConfigureMockMvc
 class IndexControlTest {
 
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private PostService posts;
 
     @Test
     @WithMockUser
@@ -59,6 +61,7 @@ class IndexControlTest {
         Optional<Post> post = Optional.of(new Post("test", "test"));
         post.get().setId(1);
         post.get().setCreated(LocalDateTime.now());
+        posts.save(post.get());
         this.mockMvc.perform(get("/posts/{id}", post.get().getId()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -71,7 +74,7 @@ class IndexControlTest {
         Optional<Post> post = Optional.of(new Post("test", "test"));
         post.get().setId(1);
         post.get().setCreated(LocalDateTime.now());
-
+        posts.save(post.get());
         this.mockMvc.perform(get("/discussion/{id}", post.get().getId()))
                 .andDo(print())
                 .andExpect(status().isOk())

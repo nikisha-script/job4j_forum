@@ -23,13 +23,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-@SpringBootTest(classes = Main.class)
+@SpringBootTest()
 @AutoConfigureMockMvc
 public class PostControlTest {
 
     @MockBean
     private PostService posts;
-
 
     @MockBean
     private UserRepository users;
