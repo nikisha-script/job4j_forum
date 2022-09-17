@@ -3,7 +3,6 @@ package ru.job4j.forum.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Setter

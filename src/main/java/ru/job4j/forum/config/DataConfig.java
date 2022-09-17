@@ -1,6 +1,6 @@
 package ru.job4j.forum.config;
+
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 @EnableJpaRepositories("ru.job4j.forum.store")
 @EnableTransactionManagement
 public class DataConfig {
-    @Bean
+   /* @Bean
     public DataSource ds(@Value("${jdbc.driver}") String driver,
                          @Value("${jdbc.url}") String url,
                          @Value("${jdbc.username}") String username,
@@ -29,6 +29,16 @@ public class DataConfig {
         ds.setUrl(url);
         ds.setUsername(username);
         ds.setPassword(password);
+        return ds;
+    }*/
+
+    @Bean
+    public DataSource ds() {
+        BasicDataSource ds = new BasicDataSource();
+        ds.setDriverClassName("org.h2.Driver");
+        ds.setUrl("jdbc:h2:./testdb;MODE=PostgreSQL;CASE_INSENSITIVE_IDENTIFIERS=TRUE;");
+        ds.setUsername("");
+        ds.setPassword("");
         return ds;
     }
 
