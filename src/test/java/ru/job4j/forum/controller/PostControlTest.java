@@ -45,6 +45,7 @@ public class PostControlTest {
                 .andExpect(status().is3xxRedirection());
         ArgumentCaptor<Post> argument = ArgumentCaptor.forClass(Post.class);
         verify(posts).save(argument.capture());
+
         assertThat(argument.getValue().getName(), is("Куплю ладу-грант. Дорого."));
     }
 
